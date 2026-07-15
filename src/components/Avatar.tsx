@@ -1,5 +1,4 @@
 import type { GenStatus } from "../api/types";
-import shadowImg from "../assets/avatars/shadow.png";
 import member1 from "../assets/avatars/member-1.png";
 import member2 from "../assets/avatars/member-2.png";
 import member3 from "../assets/avatars/member-3.png";
@@ -34,22 +33,17 @@ export function Avatar({ member, size = 88, showName = true, unreadPreview }: Av
   const src = ready ? member.avatarUrl : placeholderFor(member.id);
 
   return (
-    <div className="flex flex-col items-center gap-1.5" style={{ width: size }}>
+    <div className="flex flex-col items-center gap-2.5" style={{ width: size }}>
       <div className="relative shrink-0" style={{ width: size, height: size }}>
         {unreadPreview && (
-          <div className="absolute -top-7 -right-2 max-w-[10rem] rounded-2xl rounded-br-sm bg-accent px-3 py-1.5 shadow-sm z-10">
-            <span className="block text-white text-sm font-medium leading-snug whitespace-nowrap truncate">
-              {unreadPreview}
-            </span>
-          </div>
+          <span className="absolute top-1 right-1 w-4 h-4 rounded-full bg-accent border-2 border-cream shadow-sm z-10" />
         )}
         <img
           src={src}
           alt={member.isMe ? "나" : member.name}
-          className="w-full h-full rounded-full object-cover bg-surface border border-border"
+          className="w-full h-full rounded-full object-cover bg-surface"
         />
       </div>
-      <img src={shadowImg} alt="" className="w-[70%] shrink-0" style={{ height: size * 0.06 }} />
       {showName && (
         <span className="text-sm text-ink-muted">{member.isMe ? "나" : member.name}</span>
       )}
