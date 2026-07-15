@@ -16,7 +16,7 @@ const SCALE_LABEL: Record<TextScale, string> = {
 
 export function Profile() {
   const navigate = useNavigate();
-  const { memberId, setSession } = useSession();
+  const { memberId, setSession, clearSession } = useSession();
   const { getMember, refetch } = useMembers();
   const me = memberId ? getMember(memberId) : undefined;
   const [name, setName] = useState(me?.name ?? "");
@@ -85,6 +85,16 @@ export function Profile() {
           ))}
         </div>
       </div>
+
+      <button
+        onClick={() => {
+          clearSession();
+          navigate("/", { replace: true });
+        }}
+        className="mt-auto mb-6 text-sm text-danger underline"
+      >
+        로그아웃
+      </button>
     </Screen>
   );
 }
