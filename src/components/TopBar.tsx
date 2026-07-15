@@ -10,7 +10,7 @@ export function TopBar({ title, onBack }: TopBarProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="relative flex items-center justify-center w-full px-4 py-3 shrink-0 bg-cream border-b border-border">
+    <div className="relative flex items-center justify-center w-full min-h-[52px] px-4 py-3 shrink-0 bg-cream border-b border-border">
       <button
         onClick={onBack ?? (() => navigate(-1))}
         className="absolute left-3 p-1 text-accent"

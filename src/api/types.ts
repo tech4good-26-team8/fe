@@ -18,6 +18,7 @@ export interface JoinMemberRequest {
 
 export interface JoinMemberResponse {
   memberId: number;
+  groupId?: number;
   voiceScript: string;
   avatarStatus: GenStatus;
   voiceStatus: GenStatus;

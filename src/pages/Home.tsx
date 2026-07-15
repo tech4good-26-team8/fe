@@ -5,15 +5,20 @@ import { Avatar } from "../components/Avatar";
 import { BottomTabs } from "../components/BottomTabs";
 import { RecordSheet } from "../components/RecordSheet";
 import { InviteModal } from "../components/InviteModal";
-import { BellIcon, LinkIcon, PlusIcon, UserIcon } from "../components/icons";
+import { BellIcon, PlusIcon, UserIcon } from "../components/icons";
 import { useSession } from "../context/SessionContext";
 import { useMembers } from "../context/MembersContext";
 import { getGroup, sendVoiceMessage } from "../api/endpoints";
 import type { RecordingResult } from "../hooks/useAudioRecorder";
 
+function todayLabel() {
+  const d = new Date();
+  return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
+}
+
 export function Home() {
   const navigate = useNavigate();
-  const { groupId, memberId, joinedAt } = useSession();
+  const { groupId, memberId } = useSession();
   const { members } = useMembers();
   const [recording, setRecording] = useState(false);
   const [inviting, setInviting] = useState(false);
@@ -28,24 +33,19 @@ export function Home() {
       .catch(() => setGroup(null));
   }, [groupId]);
 
-  const sinceLabel = joinedAt
-    ? new Date(joinedAt).toISOString().slice(0, 10).replaceAll("-", ".")
-    : null;
+  const sinceLabel = todayLabel();
 
   function showMockNotification() {
     setNotification("🔔 새로운 소식이 있어요");
     setTimeout(() => setNotification(null), 2500);
   }
 
-  async function copyInviteLink() {
+  function copyInviteLink() {
     if (!group) return;
-    try {
-      await navigator.clipboard.writeText(`https://familog.app/invite/${group.inviteCode}`);
-    } catch {
-      // clipboard unavailable — feedback still reassures the user visually
-    }
+    // update feedback state first — clipboard permission/prompt must never block or delay it
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+    navigator.clipboard?.writeText(`https://familog.app/invite/${group.inviteCode}`).catch(() => {});
   }
 
   async function sendVoiceNote(result: RecordingResult) {
@@ -91,17 +91,6 @@ export function Home() {
         </div>
       </div>
 
-      <button
-        onClick={copyInviteLink}
-        disabled={!group}
-        className="self-start ml-5 mt-3 inline-flex items-center gap-2 rounded-full bg-surface border border-border pl-5 pr-4 h-11 shrink-0 disabled:opacity-50"
-      >
-        <span className="text-sm text-ink">
-          {copied ? "링크를 복사했어요" : "초대 링크 복사하기"}
-        </span>
-        <LinkIcon className="w-4 h-4 text-ink shrink-0" />
-      </button>
-
       {notification && (
         <div className="mx-5 mt-3 rounded-xl bg-surface border-l-4 border-accent px-4 py-2 text-sm text-ink shadow-sm shrink-0">
           {notification}
@@ -129,7 +118,13 @@ export function Home() {
 
       {recording && <RecordSheet onCancel={() => setRecording(false)} onSend={sendVoiceNote} />}
       {inviting && group && (
-        <InviteModal inviteCode={group.inviteCode} groupName={group.name} onClose={() => setInviting(false)} />
+        <InviteModal
+          inviteCode={group.inviteCode}
+          groupName={group.name}
+          copied={copied}
+          onCopyLink={copyInviteLink}
+          onClose={() => setInviting(false)}
+        />
       )}
     </Screen>
   );
