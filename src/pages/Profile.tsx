@@ -39,50 +39,52 @@ export function Profile() {
   }
 
   return (
-    <Screen className="items-center px-6 pt-2">
+    <Screen className="relative overflow-hidden">
       <TopBar title="프로필 관리" />
 
-      <div className="mt-8">
-        {me && (
-          <Avatar
-            member={{ id: me.memberId, name: me.name, avatarUrl: me.avatarUrl, avatarStatus: me.avatarStatus }}
-            size={180}
-            showName={false}
+      <div className="scroll-area flex-1 overflow-y-auto flex flex-col items-center px-6 pt-2">
+        <div className="mt-8">
+          {me && (
+            <Avatar
+              member={{ id: me.memberId, name: me.name, avatarUrl: me.avatarUrl, avatarStatus: me.avatarStatus }}
+              size={180}
+              showName={false}
+            />
+          )}
+        </div>
+
+        <div className="w-full flex flex-col gap-3 mt-10">
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            onBlur={saveName}
+            onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
+            placeholder="이름 수정"
+            className="w-full rounded-2xl bg-surface border border-border px-5 py-4 text-base text-ink placeholder:text-ink-muted outline-none focus:border-accent"
           />
-        )}
-      </div>
+          <button
+            onClick={() => navigate("/scan")}
+            className="w-full rounded-2xl bg-surface border border-border py-4 text-base font-medium text-ink text-center"
+          >
+            사진 다시 찍기 →
+          </button>
+        </div>
 
-      <div className="w-full flex flex-col gap-3 mt-10">
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          onBlur={saveName}
-          onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
-          placeholder="이름 수정"
-          className="w-full rounded-2xl bg-surface border border-border px-5 py-4 text-base text-ink placeholder:text-ink-muted outline-none focus:border-accent"
-        />
-        <button
-          onClick={() => navigate("/scan")}
-          className="w-full rounded-2xl bg-surface border border-border py-4 text-base font-medium text-ink text-center"
-        >
-          사진 다시 찍기 →
-        </button>
-      </div>
-
-      <div className="w-full mt-8">
-        <span className="text-sm text-ink-muted">글씨 크기</span>
-        <div className="flex rounded-2xl bg-surface border border-border p-1 mt-2">
-          {(Object.keys(SCALE_LABEL) as TextScale[]).map((s) => (
-            <button
-              key={s}
-              onClick={() => setScale(s)}
-              className={`flex-1 rounded-xl py-3 text-sm font-semibold ${
-                scale === s ? "bg-accent text-white" : "text-ink-muted"
-              }`}
-            >
-              {SCALE_LABEL[s]}
-            </button>
-          ))}
+        <div className="w-full mt-8">
+          <span className="text-sm text-ink-muted">글씨 크기</span>
+          <div className="flex rounded-2xl bg-surface border border-border p-1 mt-2">
+            {(Object.keys(SCALE_LABEL) as TextScale[]).map((s) => (
+              <button
+                key={s}
+                onClick={() => setScale(s)}
+                className={`flex-1 rounded-xl py-3 text-sm font-semibold ${
+                  scale === s ? "bg-accent text-white" : "text-ink-muted"
+                }`}
+              >
+                {SCALE_LABEL[s]}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </Screen>

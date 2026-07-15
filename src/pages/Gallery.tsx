@@ -46,7 +46,7 @@ export function Gallery() {
         {selectedDate ? formatKoreanDate(selectedDate) : "전체 날짜"}
       </button>
 
-      <div className="flex-1 overflow-y-auto flex flex-col gap-6 px-6 py-4">
+      <div className="scroll-area flex-1 overflow-y-auto flex flex-col gap-6 px-6 py-4">
         {photos.length === 0 && (
           <p className="text-sm text-ink-muted text-center mt-10">아직 등록된 사진이 없어요</p>
         )}

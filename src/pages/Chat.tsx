@@ -111,7 +111,7 @@ export function Chat() {
     <Screen className="relative overflow-hidden">
       <TopBar title="채팅" />
 
-      <div className="flex-1 overflow-y-auto flex flex-col gap-4 px-6 py-4">
+      <div className="scroll-area flex-1 overflow-y-auto flex flex-col gap-4 px-6 py-4">
         {messages.map((m) => {
           const isMe = m.senderId === memberId;
           const author = getMember(m.senderId);
@@ -148,7 +148,7 @@ export function Chat() {
                 {m.type === "IMAGE" && m.imageUrl && (
                   <img src={m.imageUrl} alt="공유한 사진" className="w-full max-h-64 object-cover" />
                 )}
-                {m.type === "VOICE" && (
+                {m.type !== "IMAGE" && (
                   <button
                     onClick={() => togglePlay(m)}
                     disabled={!audioReady}
