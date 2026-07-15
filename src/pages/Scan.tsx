@@ -70,14 +70,14 @@ export function Scan() {
 
   return (
     <Screen className="items-center px-6 pt-6 pb-10">
-      <TopBar title="얼굴 인식" />
+      <TopBar />
       <div className="w-full mt-4">
         <h1 className="text-2xl font-bold text-ink leading-snug">
           카메라를 정면으로
           <br />
           바라봐주세요
         </h1>
-        <p className="text-base text-ink-muted mt-2">사진을 바탕으로 3D 캐릭터가 생성돼요</p>
+        <p className="text-lg text-ink-muted mt-2">사진을 바탕으로 3D 캐릭터가 생성돼요</p>
       </div>
 
       <div className="flex-1 flex items-center justify-center w-full">
@@ -110,11 +110,11 @@ export function Scan() {
         <button
           onClick={startScan}
           disabled={scanning}
-          className="w-full h-14 rounded-2xl bg-accent disabled:bg-border disabled:text-ink-muted text-lg font-semibold text-white active:scale-[0.99] transition-transform"
+          className="w-full min-h-14 rounded-2xl bg-accent disabled:bg-border disabled:text-ink-muted text-lg font-semibold text-white active:scale-[0.99] transition-transform"
         >
           {scanning ? "스캔 중..." : "사진 촬영하기"}
         </button>
-        <button className="text-[15px] text-ink-muted">
+        <button className="text-base text-ink-muted">
           도움이 필요하신가요? <span className="font-semibold text-accent">지원센터 문의</span>
         </button>
       </div>

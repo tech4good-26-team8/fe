@@ -18,7 +18,7 @@ export function VoiceRecord() {
 
   return (
     <Screen className="items-center px-6 pt-2 pb-10">
-      <TopBar title="음성 인식" />
+      <TopBar />
 
       <div className="w-full mt-4">
         <h1 className="text-2xl font-bold text-ink leading-snug">
@@ -26,7 +26,7 @@ export function VoiceRecord() {
           <br />
           담아볼게요
         </h1>
-        <p className="text-base text-ink-muted mt-2">
+        <p className="text-lg text-ink-muted mt-2">
           시작을 누르고, 화면에 뜨는 문장을 읽어주세요
         </p>
       </div>
@@ -47,7 +47,7 @@ export function VoiceRecord() {
       {!recording && (
         <button
           onClick={() => setRecording(true)}
-          className="w-full h-14 rounded-2xl bg-accent text-lg font-semibold text-white active:scale-[0.99] transition-transform"
+          className="w-full min-h-14 rounded-2xl bg-accent text-lg font-semibold text-white active:scale-[0.99] transition-transform"
         >
           음성 녹음 시작하기
         </button>
@@ -88,23 +88,24 @@ function RecordingPanel({
   }
 
   return (
-    <div className="flex flex-col items-center gap-6 w-full">
-      <div className="flex items-center gap-3">
-        <Waveform className="h-14 scale-x-[-1] text-accent" />
-        <div className="w-[110px] h-[110px] rounded-full bg-cream border-2 border-accent flex items-center justify-center shrink-0">
-          <MicIcon
-            className={`w-9 h-9 text-accent ${recorderState === "recording" ? "animate-pulse" : ""}`}
-          />
-        </div>
-        <Waveform className="h-14 text-accent" />
+    <div className="flex flex-col items-center gap-8 w-full">
+      <div className="w-full rounded-2xl bg-surface shadow-sm px-6 py-6 text-center">
+        <p className="text-base text-ink-muted mb-2">아래 문장을 천천히 읽어주세요</p>
+        <p className="text-2xl font-bold text-ink leading-snug">"{script}"</p>
       </div>
 
-      <div className="rounded-full bg-surface border border-border px-6 py-3">
-        <span className="text-sm text-ink">"{script}"</span>
+      <div className="flex items-center gap-3">
+        <Waveform className="h-10 scale-x-[-1] text-accent" />
+        <div className="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
+          <MicIcon
+            className={`w-8 h-8 text-accent ${recorderState === "recording" ? "animate-pulse" : ""}`}
+          />
+        </div>
+        <Waveform className="h-10 text-accent" />
       </div>
 
       {blocked && (
-        <span className="text-sm text-ink-muted text-center px-6">
+        <span className="text-[15px] text-ink-muted text-center px-6">
           {recorderState === "unsupported"
             ? "이 브라우저는 음성 녹음을 지원하지 않아요"
             : "마이크 권한이 필요해요"}
@@ -114,9 +115,9 @@ function RecordingPanel({
       <button
         onClick={handleDone}
         disabled={blocked || saving}
-        className="w-full rounded-2xl bg-accent disabled:bg-border disabled:text-ink-muted py-4 text-base font-semibold text-white"
+        className="w-full min-h-14 rounded-2xl bg-accent disabled:bg-border disabled:text-ink-muted text-lg font-semibold text-white active:scale-[0.99] transition-transform"
       >
-        {saving ? "음성 저장 중..." : "완성된 캐릭터 보러가기 →"}
+        {saving ? "음성 저장 중..." : "다 읽었어요"}
       </button>
     </div>
   );

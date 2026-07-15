@@ -65,7 +65,7 @@ export function InviteCode() {
           <br />
           입력해주세요
         </h1>
-        <p className="text-base text-ink-muted mt-2">가족에게 공유받은 코드예요</p>
+        <p className="text-lg text-ink-muted mt-2">가족에게 공유받은 코드예요</p>
         <div className="grid grid-cols-6 gap-2 w-full mt-10">
           {Array.from({ length: CODE_LENGTH }).map((_, i) => (
             <div

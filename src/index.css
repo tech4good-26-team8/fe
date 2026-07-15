@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  /* ui-rounded resolves to SF Pro Rounded on Apple platforms — softer, rounder
-     letterforms that match the logo's curvy line style. Falls back gracefully. */
-  --font-sans: ui-rounded, -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Pretendard", system-ui, "Segoe UI", Roboto, sans-serif;
+  /* 본문: 프리텐다드(가독), 제목: 나눔스퀘어라운드(로고의 둥근 글씨체와 톤 일치) */
+  --font-sans: "Pretendard Variable", Pretendard, ui-rounded, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-display: NanumSquareRound, "Pretendard Variable", Pretendard, ui-rounded, system-ui, sans-serif;
 
   /* screen background — warm, not white, so surface cards can stand out on top */
   --color-cream: #fdf8f0;
@@ -36,6 +36,12 @@
 
 * {
   box-sizing: border-box;
+}
+
+/* 제목·버튼은 로고와 같은 결의 둥근 서체로 — 부드럽고 친근한 톤 */
+h1,
+button {
+  font-family: var(--font-display);
 }
 
 body {

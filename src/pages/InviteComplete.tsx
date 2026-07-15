@@ -45,7 +45,7 @@ export function InviteComplete() {
           <br />
           초대가 완료되었어요!
         </h1>
-        <p className="text-base text-ink-muted">
+        <p className="text-lg text-ink-muted">
           이제 가족과 목소리로 쉽게 일상을 나눠보세요
         </p>
       </div>
@@ -54,22 +54,30 @@ export function InviteComplete() {
         className="relative w-64 h-64 rounded-full bg-surface shrink-0"
         style={{ boxShadow: "0 0 40px 10px rgba(255, 222, 89, 0.5)" }}
       >
-        {preview.map((m, i) => (
-          <div
-            key={m.memberId}
-            className="absolute"
-            style={{ left: COLLAGE_SLOTS[i].left, top: COLLAGE_SLOTS[i].top }}
-          >
-            <Avatar
-              member={{ id: m.memberId, name: m.name, avatarUrl: m.avatarUrl, avatarStatus: m.avatarStatus }}
-              size={COLLAGE_SLOTS[i].size}
-              showName={false}
-            />
+        {preview.length > 0 ? (
+          preview.map((m, i) => (
+            <div
+              key={m.memberId}
+              className="absolute"
+              style={{ left: COLLAGE_SLOTS[i].left, top: COLLAGE_SLOTS[i].top }}
+            >
+              <Avatar
+                member={{ id: m.memberId, name: m.name, avatarUrl: m.avatarUrl, avatarStatus: m.avatarStatus }}
+                size={COLLAGE_SLOTS[i].size}
+                showName={false}
+              />
+            </div>
+          ))
+        ) : (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-8 text-center">
+            <span className="text-5xl">🏡</span>
+            <p className="text-lg font-semibold text-ink">아직 가족을 기다리고 있어요</p>
+            <p className="text-base text-ink-muted">초대코드를 공유하면 이곳이 가족들로 채워져요</p>
           </div>
-        ))}
+        )}
       </div>
 
-      <div className="w-full rounded-2xl bg-surface shadow-sm px-6 py-5 flex flex-col gap-3 text-[15px]">
+      <div className="w-full rounded-2xl bg-surface shadow-sm px-6 py-5 flex flex-col gap-3 text-base">
         <div className="flex items-center justify-between">
           <span className="text-ink-muted">가족 구성원</span>
           <span className="font-semibold text-ink">{members.length}명</span>
@@ -82,7 +90,7 @@ export function InviteComplete() {
 
       <button
         onClick={() => navigate("/home")}
-        className="w-full h-14 rounded-2xl bg-accent text-lg font-semibold text-white active:scale-[0.99] transition-transform"
+        className="w-full min-h-14 rounded-2xl bg-accent text-lg font-semibold text-white active:scale-[0.99] transition-transform"
       >
         일상 공유하러 가기
       </button>

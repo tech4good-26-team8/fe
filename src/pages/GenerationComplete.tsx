@@ -99,7 +99,7 @@ export function GenerationComplete() {
           />
         )}
         {generating && (
-          <p className="text-base text-ink-muted animate-pulse">
+          <p className="text-lg text-ink-muted animate-pulse">
             목소리를 만들고 있어요 · 1분 정도 걸려요
           </p>
         )}
@@ -117,11 +117,11 @@ export function GenerationComplete() {
         <button
           onClick={() => navigate("/invite-complete")}
           disabled={generating}
-          className="w-full h-14 rounded-2xl bg-accent text-lg font-semibold text-white disabled:bg-border disabled:text-ink-muted active:scale-[0.99] transition-transform"
+          className="w-full min-h-14 rounded-2xl bg-accent text-lg font-semibold text-white disabled:bg-border disabled:text-ink-muted active:scale-[0.99] transition-transform"
         >
           {generating ? "만드는 중…" : "초대 완료하러 가기"}
         </button>
-        <button onClick={() => navigate("/home")} className="text-[15px] text-ink-muted">
+        <button onClick={() => navigate("/home")} className="text-base text-ink-muted">
           먼저 일상 공유하러 가기 <span className="font-semibold text-accent">→</span>
         </button>
       </div>
