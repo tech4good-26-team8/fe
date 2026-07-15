@@ -1,44 +1,89 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Screen } from "../components/Screen";
 import { TopBar } from "../components/TopBar";
 import { Avatar } from "../components/Avatar";
 import { Waveform } from "../components/Waveform";
 import { RecordSheet } from "../components/RecordSheet";
-import { KeyboardIcon, MicIcon, PauseIcon, PlayIcon, SendIcon } from "../components/icons";
-import { chatMessages as initialMessages, getMember } from "../data/mockFamily";
+import { CameraIcon, KeyboardIcon, MicIcon, PauseIcon, PlayIcon, SendIcon } from "../components/icons";
 import type { RecordingResult } from "../hooks/useAudioRecorder";
-import type { ChatMessage } from "../types";
+import type { MessageResponse } from "../api/types";
+import { listMessages, markMessagesRead, sendImageMessage, sendTextMessage, sendVoiceMessage } from "../api/endpoints";
+import { useSession } from "../context/SessionContext";
+import { useMembers } from "../context/MembersContext";
 
 type ComposerMode = "voice" | "text";
 
+const POLL_INTERVAL_MS = 1800;
+
 export function Chat() {
-  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
+  const { groupId, memberId } = useSession();
+  const { getMember } = useMembers();
+  const [messages, setMessages] = useState<MessageResponse[]>([]);
   const [mode, setMode] = useState<ComposerMode>("voice");
   const [text, setText] = useState("");
   const [recording, setRecording] = useState(false);
-  const [playingId, setPlayingId] = useState<string | null>(null);
+  const [playingId, setPlayingId] = useState<number | null>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const lastIdRef = useRef<number | undefined>(undefined);
 
-  function sendVoice({ url, durationSec }: RecordingResult) {
-    setRecording(false);
-    setMessages((prev) => [
-      ...prev,
-      {
-        id: crypto.randomUUID(),
-        authorId: "me",
-        kind: "voice",
-        durationSec,
-        audioUrl: url,
-        createdAt: "지금",
-      },
-    ]);
+  useEffect(() => {
+    if (!groupId) return;
+    let cancelled = false;
+
+    async function poll() {
+      try {
+        const next = await listMessages(groupId!, lastIdRef.current);
+        if (cancelled || next.length === 0) return;
+        lastIdRef.current = next[next.length - 1].messageId;
+        setMessages((prev) => [...prev, ...next]);
+      } catch {
+        // 다음 폴링에서 재시도
+      }
+    }
+
+    poll();
+    const timer = setInterval(poll, POLL_INTERVAL_MS);
+    return () => {
+      cancelled = true;
+      clearInterval(timer);
+    };
+  }, [groupId]);
+
+  useEffect(() => {
+    if (!memberId) return;
+    markMessagesRead({ readerId: memberId }).catch(() => {});
+  }, [memberId]);
+
+  async function sendImage(file: File) {
+    if (!memberId) return;
+    try {
+      const msg = await sendImageMessage(memberId, file);
+      setMessages((prev) => [...prev, msg]);
+      lastIdRef.current = msg.messageId;
+    } catch {
+      // 전송 실패 — 사용자는 다시 시도할 수 있음
+    }
   }
 
-  function togglePlay(m: ChatMessage) {
+  async function sendVoice({ url }: RecordingResult) {
+    setRecording(false);
+    if (!memberId) return;
+    try {
+      const blob = await fetch(url).then((r) => r.blob());
+      const msg = await sendVoiceMessage(memberId, blob);
+      setMessages((prev) => [...prev, msg]);
+      lastIdRef.current = msg.messageId;
+    } catch {
+      // 전송 실패 — 사용자는 다시 시도할 수 있음
+    }
+  }
+
+  function togglePlay(m: MessageResponse) {
     const audio = audioRef.current;
     if (!audio || !m.audioUrl) return;
 
-    if (playingId === m.id) {
+    if (playingId === m.messageId) {
       audio.pause();
       setPlayingId(null);
       return;
@@ -46,22 +91,20 @@ export function Chat() {
 
     audio.src = m.audioUrl;
     audio.play();
-    setPlayingId(m.id);
+    setPlayingId(m.messageId);
   }
 
-  function sendText() {
-    if (!text.trim()) return;
-    setMessages((prev) => [
-      ...prev,
-      {
-        id: crypto.randomUUID(),
-        authorId: "me",
-        kind: "text",
-        text: text.trim(),
-        createdAt: "지금",
-      },
-    ]);
+  async function sendText() {
+    if (!text.trim() || !memberId) return;
+    const value = text.trim();
     setText("");
+    try {
+      const msg = await sendTextMessage({ senderId: memberId, text: value });
+      setMessages((prev) => [...prev, msg]);
+      lastIdRef.current = msg.messageId;
+    } catch {
+      // 전송 실패 — 사용자는 다시 시도할 수 있음
+    }
   }
 
   return (
@@ -70,36 +113,54 @@ export function Chat() {
 
       <div className="flex-1 overflow-y-auto flex flex-col gap-4 px-5 py-4">
         {messages.map((m) => {
-          const isMe = m.authorId === "me";
-          const author = getMember(m.authorId);
+          const isMe = m.senderId === memberId;
+          const author = getMember(m.senderId);
+          const audioReady = m.convertStatus === "READY" && m.audioUrl;
           return (
             <div
-              key={m.id}
+              key={m.messageId}
               className={`flex items-end gap-2 ${isMe ? "flex-row-reverse" : ""}`}
             >
-              <Avatar member={author!} size={40} showName={false} />
+              <Avatar
+                member={{
+                  id: m.senderId,
+                  name: author?.name ?? m.senderName,
+                  avatarUrl: author?.avatarUrl,
+                  avatarStatus: author?.avatarStatus,
+                }}
+                size={40}
+                showName={false}
+              />
               <div
-                className={`max-w-[68%] rounded-2xl px-4 py-3 flex flex-col gap-1 ${
+                className={`max-w-[68%] rounded-2xl flex flex-col gap-1 ${
+                  m.type === "IMAGE" ? "overflow-hidden" : "px-4 py-3"
+                } ${
                   isMe
                     ? "bg-accent-light rounded-br-sm"
                     : "bg-surface border border-border rounded-bl-sm"
                 }`}
               >
-                {m.text && <span className="text-sm text-ink">{m.text}</span>}
-                {m.kind === "voice" && (
+                {m.type !== "IMAGE" && (
+                  <span className="text-sm text-ink">
+                    {m.text ?? (m.convertStatus === "READY" ? "" : "변환 중...")}
+                  </span>
+                )}
+                {m.type === "IMAGE" && m.imageUrl && (
+                  <img src={m.imageUrl} alt="공유한 사진" className="w-full max-h-64 object-cover" />
+                )}
+                {m.type === "VOICE" && (
                   <button
                     onClick={() => togglePlay(m)}
-                    disabled={!m.audioUrl}
-                    aria-label={playingId === m.id ? "일시정지" : "재생"}
+                    disabled={!audioReady}
+                    aria-label={playingId === m.messageId ? "일시정지" : "재생"}
                     className="flex items-center gap-2 text-ink disabled:opacity-50"
                   >
-                    {playingId === m.id ? (
+                    {playingId === m.messageId ? (
                       <PauseIcon className="w-4 h-4" />
                     ) : (
                       <PlayIcon className="w-4 h-4" />
                     )}
                     <Waveform />
-                    <span className="text-xs text-ink-muted">{m.durationSec}"</span>
                   </button>
                 )}
               </div>
@@ -111,7 +172,13 @@ export function Chat() {
       <div className="bg-surface border-t border-border px-5 py-3 shrink-0">
         {mode === "voice" ? (
           <div className="flex items-center justify-center gap-4">
-            <div aria-hidden className="w-10 h-10 "></div>
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              aria-label="사진 첨부"
+              className="w-10 h-10 rounded-full bg-cream border border-border flex items-center justify-center text-ink"
+            >
+              <CameraIcon className="w-5 h-5" />
+            </button>
             <button
               onClick={() => setRecording(true)}
               aria-label="음성 녹음"
@@ -157,6 +224,17 @@ export function Chat() {
 
       {recording && <RecordSheet onCancel={() => setRecording(false)} onSend={sendVoice} />}
       <audio ref={audioRef} onEnded={() => setPlayingId(null)} className="hidden" />
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) sendImage(file);
+          e.target.value = "";
+        }}
+        className="hidden"
+      />
     </Screen>
   );
 }

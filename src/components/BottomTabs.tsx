@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ChatIcon, ImageIcon, MicIcon } from "./icons";
+import { ArchiveIcon, ChatIcon, MicIcon } from "./icons";
 
 interface BottomTabsProps {
   onMicPress: () => void;
@@ -30,8 +30,8 @@ export function BottomTabs({ onMicPress }: BottomTabsProps) {
         onClick={() => navigate("/gallery")}
         className="flex flex-col items-center gap-1 text-ink-muted"
       >
-        <ImageIcon className="w-6 h-6" />
-        <span className="text-xs">갤러리</span>
+        <ArchiveIcon className="w-6 h-6" />
+        <span className="text-xs">보관함</span>
       </button>
     </div>
   );
