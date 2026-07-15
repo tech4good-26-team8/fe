@@ -97,7 +97,7 @@ export function Home() {
         </div>
       )}
 
-      <div className="flex-1 grid grid-cols-2 gap-x-4 gap-y-6 content-start justify-items-center px-8 pt-6 overflow-y-auto">
+      <div className="flex-1 grid grid-cols-2 gap-x-4 gap-y-6 content-start justify-items-center px-8 pt-10 overflow-y-auto">
         {members.map((m) => (
           <button key={m.memberId} onClick={() => navigate(`/member/${m.memberId}`)}>
             <Avatar
@@ -108,6 +108,7 @@ export function Home() {
                 avatarStatus: m.avatarStatus,
                 isMe: m.memberId === memberId,
               }}
+              size={116}
               unreadPreview={m.unreadCount > 0 ? (m.latestUnread?.textPreview ?? "새 소식이 있어요") : null}
             />
           </button>

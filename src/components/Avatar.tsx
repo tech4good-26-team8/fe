@@ -37,8 +37,8 @@ export function Avatar({ member, size = 88, showName = true, unreadPreview }: Av
     <div className="flex flex-col items-center gap-1.5" style={{ width: size }}>
       <div className="relative shrink-0" style={{ width: size, height: size }}>
         {unreadPreview && (
-          <div className="absolute -top-4 -right-2 max-w-[9rem] rounded-2xl rounded-br-sm bg-accent px-3 py-1.5 shadow-sm z-10">
-            <span className="block text-white text-xs font-medium leading-snug line-clamp-2">
+          <div className="absolute -top-7 -right-2 max-w-[10rem] rounded-2xl rounded-br-sm bg-accent px-3 py-1.5 shadow-sm z-10">
+            <span className="block text-white text-sm font-medium leading-snug whitespace-nowrap truncate">
               {unreadPreview}
             </span>
           </div>
