@@ -98,6 +98,23 @@ export function SendIcon({ className }: IconProps) {
   );
 }
 
+export function PlayIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path className={base} d="M6 4l14 8-14 8V4Z" />
+    </svg>
+  );
+}
+
+export function PauseIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <line className={base} x1="8" y1="4" x2="8" y2="20" />
+      <line className={base} x1="16" y1="4" x2="16" y2="20" />
+    </svg>
+  );
+}
+
 export function DeleteIcon({ className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" className={className} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
