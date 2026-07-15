@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Screen } from "../components/Screen";
 import { TopBar } from "../components/TopBar";
 import { Avatar } from "../components/Avatar";
 import { Waveform } from "../components/Waveform";
 import { RecordSheet } from "../components/RecordSheet";
-import { KeyboardIcon, MicIcon, SendIcon } from "../components/icons";
+import { KeyboardIcon, MicIcon, PauseIcon, PlayIcon, SendIcon } from "../components/icons";
 import { chatMessages as initialMessages, getMember } from "../data/mockFamily";
+import type { RecordingResult } from "../hooks/useAudioRecorder";
 import type { ChatMessage } from "../types";
 
 type ComposerMode = "voice" | "text";
@@ -15,8 +16,10 @@ export function Chat() {
   const [mode, setMode] = useState<ComposerMode>("voice");
   const [text, setText] = useState("");
   const [recording, setRecording] = useState(false);
+  const [playingId, setPlayingId] = useState<string | null>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
-  function sendVoice() {
+  function sendVoice({ url, durationSec }: RecordingResult) {
     setRecording(false);
     setMessages((prev) => [
       ...prev,
@@ -24,10 +27,26 @@ export function Chat() {
         id: crypto.randomUUID(),
         authorId: "me",
         kind: "voice",
-        durationSec: 3,
+        durationSec,
+        audioUrl: url,
         createdAt: "지금",
       },
     ]);
+  }
+
+  function togglePlay(m: ChatMessage) {
+    const audio = audioRef.current;
+    if (!audio || !m.audioUrl) return;
+
+    if (playingId === m.id) {
+      audio.pause();
+      setPlayingId(null);
+      return;
+    }
+
+    audio.src = m.audioUrl;
+    audio.play();
+    setPlayingId(m.id);
   }
 
   function sendText() {
@@ -68,10 +87,20 @@ export function Chat() {
               >
                 {m.text && <span className="text-sm text-ink">{m.text}</span>}
                 {m.kind === "voice" && (
-                  <div className="flex items-center gap-2 text-ink">
+                  <button
+                    onClick={() => togglePlay(m)}
+                    disabled={!m.audioUrl}
+                    aria-label={playingId === m.id ? "일시정지" : "재생"}
+                    className="flex items-center gap-2 text-ink disabled:opacity-50"
+                  >
+                    {playingId === m.id ? (
+                      <PauseIcon className="w-4 h-4" />
+                    ) : (
+                      <PlayIcon className="w-4 h-4" />
+                    )}
                     <Waveform />
                     <span className="text-xs text-ink-muted">{m.durationSec}"</span>
-                  </div>
+                  </button>
                 )}
               </div>
             </div>
@@ -81,7 +110,8 @@ export function Chat() {
 
       <div className="bg-surface border-t border-border px-5 py-3 shrink-0">
         {mode === "voice" ? (
-          <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center gap-4">
+            <div aria-hidden className="w-10 h-10 "></div>
             <button
               onClick={() => setRecording(true)}
               aria-label="음성 녹음"
@@ -126,6 +156,7 @@ export function Chat() {
       </div>
 
       {recording && <RecordSheet onCancel={() => setRecording(false)} onSend={sendVoice} />}
+      <audio ref={audioRef} onEnded={() => setPlayingId(null)} className="hidden" />
     </Screen>
   );
 }
