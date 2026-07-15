@@ -66,7 +66,7 @@ export function Welcome() {
           onKeyDown={(e) => e.key === "Enter" && filled && goToInviteCode()}
           placeholder="이름 입력"
           autoFocus
-          className="w-full bg-transparent border-b-2 border-ink/15 focus:border-accent py-3 mt-8 text-2xl font-bold text-ink placeholder:text-ink-muted/50 placeholder:font-medium outline-none transition-colors"
+          className="w-full h-16 rounded-2xl bg-white/50 backdrop-blur-md px-5 mt-8 text-2xl font-bold text-ink placeholder:text-xl placeholder:font-medium placeholder:text-ink-muted/60 outline-none transition-all duration-200 focus:bg-white/90 focus:shadow-lg focus:shadow-accent/10"
         />
         {error && <span className="text-sm text-danger mt-3">{error}</span>}
       </div>
