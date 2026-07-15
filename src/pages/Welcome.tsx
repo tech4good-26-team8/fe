@@ -52,15 +52,11 @@ export function Welcome() {
     >
       <div className="flex-1 flex flex-col justify-center w-full">
         <div className="flex justify-center">
-          <Logo size={120} />
+          <Logo size={170} />
         </div>
 
-        <div className="mt-10">
-          <h1 className="text-[26px] font-bold text-ink leading-snug">
-            만나서 반가워요!
-            <br />
-            어떻게 불러드릴까요?
-          </h1>
+        <div className="mt-12">
+          <h1 className="text-[26px] font-bold text-ink leading-snug">어떻게 불러드릴까요?</h1>
           <p className="text-base text-ink-muted mt-3">가족들에게 보여질 이름이에요</p>
         </div>
 
