@@ -61,7 +61,9 @@ export function Chat() {
               <Avatar member={author!} size={40} showName={false} />
               <div
                 className={`max-w-[68%] rounded-2xl px-4 py-3 flex flex-col gap-1 ${
-                  isMe ? "bg-accent-light rounded-br-sm" : "bg-beige rounded-bl-sm"
+                  isMe
+                    ? "bg-accent-light rounded-br-sm"
+                    : "bg-surface border border-border rounded-bl-sm"
                 }`}
               >
                 {m.text && <span className="text-sm text-ink">{m.text}</span>}
@@ -77,20 +79,20 @@ export function Chat() {
         })}
       </div>
 
-      <div className="border-t border-beige-dark px-5 py-3 shrink-0">
+      <div className="bg-surface border-t border-border px-5 py-3 shrink-0">
         {mode === "voice" ? (
           <div className="flex items-center gap-3">
             <button
               onClick={() => setRecording(true)}
               aria-label="음성 녹음"
-              className="w-14 h-14 rounded-full bg-accent flex items-center justify-center text-ink"
+              className="w-14 h-14 rounded-full bg-accent flex items-center justify-center text-white"
             >
               <MicIcon className="w-6 h-6" />
             </button>
             <button
               onClick={() => setMode("text")}
               aria-label="키보드로 입력"
-              className="w-10 h-10 rounded-full bg-beige flex items-center justify-center text-ink"
+              className="w-10 h-10 rounded-full bg-cream border border-border flex items-center justify-center text-ink"
             >
               <KeyboardIcon className="w-5 h-5" />
             </button>
@@ -100,7 +102,7 @@ export function Chat() {
             <button
               onClick={() => setMode("voice")}
               aria-label="음성으로 전환"
-              className="w-9 h-9 rounded-full bg-beige flex items-center justify-center text-ink shrink-0"
+              className="w-9 h-9 rounded-full bg-cream border border-border flex items-center justify-center text-ink shrink-0"
             >
               <MicIcon className="w-4 h-4" />
             </button>
@@ -110,12 +112,12 @@ export function Chat() {
               onKeyDown={(e) => e.key === "Enter" && sendText()}
               placeholder="메시지 입력"
               autoFocus
-              className="flex-1 rounded-full bg-beige px-4 py-2.5 text-sm text-ink placeholder:text-ink-muted outline-none"
+              className="flex-1 rounded-full bg-cream border border-border px-4 py-2.5 text-sm text-ink placeholder:text-ink-muted outline-none focus:border-accent"
             />
             <button
               onClick={sendText}
               aria-label="보내기"
-              className="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-ink shrink-0"
+              className="w-9 h-9 rounded-full bg-accent flex items-center justify-center text-white shrink-0"
             >
               <SendIcon className="w-4 h-4" />
             </button>

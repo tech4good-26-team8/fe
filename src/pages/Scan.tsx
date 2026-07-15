@@ -36,7 +36,7 @@ export function Scan() {
       </div>
 
       <div className="flex-1 flex items-center justify-center w-full">
-        <div className="relative w-64 h-64 rounded-full overflow-hidden bg-beige flex items-center justify-center">
+        <div className="relative w-64 h-64 rounded-full overflow-hidden bg-surface border-2 border-border flex items-center justify-center">
           {!cameraError ? (
             <video
               ref={videoRef}
@@ -62,7 +62,7 @@ export function Scan() {
         <button
           onClick={startScan}
           disabled={scanning}
-          className="w-full rounded-2xl bg-accent disabled:bg-beige-dark py-4 text-base font-semibold text-ink"
+          className="w-full rounded-2xl bg-accent disabled:bg-border disabled:text-ink-muted py-4 text-base font-semibold text-white"
         >
           {scanning ? "스캔 중..." : "스캔 시작하기"}
         </button>

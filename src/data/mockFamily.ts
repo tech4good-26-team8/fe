@@ -8,7 +8,6 @@ export const members: FamilyMember[] = [
     name: "김순자",
     relation: "할머니",
     emoji: "👵",
-    bg: "bg-accent-light",
     status: "active",
   },
   {
@@ -16,7 +15,6 @@ export const members: FamilyMember[] = [
     name: "이정숙",
     relation: "엄마",
     emoji: "👩",
-    bg: "bg-beige",
     status: "active",
   },
   {
@@ -24,7 +22,6 @@ export const members: FamilyMember[] = [
     name: "김도윤",
     relation: "아빠",
     emoji: "👨",
-    bg: "bg-accent-light",
     status: "busy",
   },
   {
@@ -32,7 +29,6 @@ export const members: FamilyMember[] = [
     name: "김지영",
     relation: "나",
     emoji: "🙋‍♀️",
-    bg: "bg-beige",
     status: "none",
     isMe: true,
   },
@@ -41,7 +37,6 @@ export const members: FamilyMember[] = [
     name: "김민재",
     relation: "오빠",
     emoji: "🧑",
-    bg: "bg-accent-light",
     status: "none",
   },
   {
@@ -49,7 +44,6 @@ export const members: FamilyMember[] = [
     name: "박서준",
     relation: "손자",
     emoji: "👦",
-    bg: "bg-beige",
     status: "sleeping",
   },
 ];

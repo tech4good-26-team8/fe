@@ -15,7 +15,7 @@ export function InviteComplete() {
         초대가 완료되었어요!
       </h1>
 
-      <div className="w-64 h-64 rounded-full bg-beige flex items-center justify-center">
+      <div className="w-64 h-64 rounded-full bg-surface border-2 border-border flex items-center justify-center">
         <div className="grid grid-cols-2 gap-4">
           {preview.map((m) => (
             <Avatar key={m.id} member={m} size={64} showName={false} />
@@ -25,7 +25,7 @@ export function InviteComplete() {
 
       <button
         onClick={() => navigate("/home")}
-        className="w-full rounded-2xl bg-accent py-4 text-base font-semibold text-ink"
+        className="w-full rounded-2xl bg-accent py-4 text-base font-semibold text-white"
       >
         일상 공유하러 가기 →
       </button>

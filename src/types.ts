@@ -5,7 +5,6 @@ export interface FamilyMember {
   name: string;
   relation: string;
   emoji: string;
-  bg: string;
   status: MemberStatus;
   isMe?: boolean;
 }

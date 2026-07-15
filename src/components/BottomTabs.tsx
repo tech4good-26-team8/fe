@@ -9,7 +9,7 @@ export function BottomTabs({ onMicPress }: BottomTabsProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="relative flex items-center justify-between px-10 pt-8 pb-6 border-t border-beige-dark shrink-0">
+    <div className="relative flex items-center justify-between px-10 pt-8 pb-6 bg-surface border-t border-border shrink-0">
       <button
         onClick={() => navigate("/chat")}
         className="flex flex-col items-center gap-1 text-ink-muted"
@@ -21,9 +21,9 @@ export function BottomTabs({ onMicPress }: BottomTabsProps) {
       <button
         onClick={onMicPress}
         aria-label="음성 녹음"
-        className="absolute left-1/2 -translate-x-1/2 -top-7 w-16 h-16 rounded-full bg-accent shadow-md flex items-center justify-center"
+        className="absolute left-1/2 -translate-x-1/2 -top-7 w-16 h-16 rounded-full bg-accent shadow-lg shadow-accent/30 flex items-center justify-center"
       >
-        <MicIcon className="w-7 h-7 text-ink" />
+        <MicIcon className="w-7 h-7 text-white" />
       </button>
 
       <button

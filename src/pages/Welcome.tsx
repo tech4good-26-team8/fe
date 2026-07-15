@@ -8,22 +8,20 @@ export function Welcome() {
   const [name, setName] = useState("");
 
   return (
-    <Screen className="items-center px-6 pt-24 pb-10">
+    <Screen className="items-center justify-center px-6 pb-16 gap-14">
       <Logo size={140} />
-
-      <div className="flex-1" />
 
       <div className="w-full flex flex-col gap-3">
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="이름 입력"
-          className="w-full rounded-2xl bg-beige px-5 py-4 text-base text-ink placeholder:text-ink-muted outline-none"
+          className="w-full rounded-2xl bg-surface border border-border px-5 py-4 text-base text-ink placeholder:text-ink-muted outline-none focus:border-accent"
         />
         <button
           disabled={!name.trim()}
           onClick={() => navigate("/invite-code")}
-          className="w-full rounded-2xl bg-accent disabled:bg-beige-dark disabled:text-ink-muted py-4 text-base font-semibold text-ink"
+          className="w-full rounded-2xl bg-accent disabled:bg-border disabled:text-ink-muted py-4 text-base font-semibold text-white disabled:font-medium"
         >
           가족 코드로 접속하기
         </button>

@@ -1,15 +1,27 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Pretendard", system-ui, "Segoe UI", Roboto, sans-serif;
+  /* ui-rounded resolves to SF Pro Rounded on Apple platforms — softer, rounder
+     letterforms that match the logo's curvy line style. Falls back gracefully. */
+  --font-sans: ui-rounded, -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Pretendard", system-ui, "Segoe UI", Roboto, sans-serif;
 
+  /* screen background — warm, not white, so surface cards can stand out on top */
   --color-cream: #fdf8f0;
+  /* neutral surface: cards, inputs, bubbles, nav/tab bars */
+  --color-surface: #ffffff;
+  /* hairline dividers/borders */
+  --color-border: #ece1d0;
+  /* muted neutral fill for things like status badges — not a "point" color */
   --color-beige: #c8a47b;
   --color-beige-dark: #b28f68;
+
+  /* point color — reserve for primary CTAs / active states only */
   --color-accent: #ff8210;
   --color-accent-dark: #e06f08;
+  /* rare secondary highlight — logo, own-message identity, tiny badges */
   --color-accent-light: #ffde59;
-  --color-ink: #4a3f2e;
+
+  --color-ink: #2b2318;
   --color-ink-muted: #8a7b63;
   --color-danger: #d97452;
 }
@@ -18,7 +30,8 @@
   color-scheme: light;
   font: 17px/145% var(--font-sans);
   color: var(--color-ink);
-  background: var(--color-beige-dark);
+  background: var(--color-cream);
+  -webkit-tap-highlight-color: transparent;
 }
 
 * {
@@ -33,7 +46,7 @@ body {
   min-height: 100svh;
   display: flex;
   justify-content: center;
-  background: var(--color-beige-dark);
+  background: var(--color-cream);
 }
 
 button {

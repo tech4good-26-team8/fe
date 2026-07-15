@@ -12,7 +12,7 @@ export function Gallery() {
           const uploader = getMember(item.uploaderId);
           return (
             <div key={item.id} className="flex flex-col gap-1.5">
-              <div className="aspect-square rounded-2xl bg-beige flex items-center justify-center text-ink-muted">
+              <div className="aspect-square rounded-2xl bg-surface border border-border flex items-center justify-center text-ink-muted">
                 <ImageIcon className="w-8 h-8" />
               </div>
               <span className="text-xs text-ink">

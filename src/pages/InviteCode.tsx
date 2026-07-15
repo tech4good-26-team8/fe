@@ -29,7 +29,7 @@ export function InviteCode() {
   return (
     <Screen>
       <TopBar />
-      <div className="flex flex-col items-center px-6 pt-2 gap-10">
+      <div className="flex flex-col items-center px-6 pt-2 gap-8">
         <h1 className="text-lg font-semibold text-ink">초대코드 입력</h1>
         <Logo size={120} />
         <div className="flex gap-2.5">
@@ -37,7 +37,9 @@ export function InviteCode() {
             <div
               key={i}
               className={`w-9 h-11 rounded-lg flex items-center justify-center text-lg font-semibold ${
-                i < code.length ? "bg-accent text-ink" : "bg-beige text-transparent"
+                i < code.length
+                  ? "bg-accent text-white"
+                  : "bg-surface border border-border text-transparent"
               }`}
             >
               {code[i] ?? "•"}
@@ -48,13 +50,13 @@ export function InviteCode() {
 
       <div className="flex-1" />
 
-      <div className="grid grid-cols-3 bg-beige-dark">
+      <div className="grid grid-cols-3 bg-surface border-t border-border">
         {KEYS.map((key, i) => (
           <button
             key={i}
             onClick={() => press(key)}
             disabled={!key}
-            className="h-16 flex items-center justify-center text-xl text-ink border border-beige/60 disabled:opacity-0"
+            className="h-16 flex items-center justify-center text-xl text-ink border border-border disabled:opacity-0 active:bg-cream"
           >
             {key === "back" ? "⌫" : key}
           </button>

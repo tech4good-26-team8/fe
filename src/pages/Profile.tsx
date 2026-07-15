@@ -4,11 +4,19 @@ import { Screen } from "../components/Screen";
 import { TopBar } from "../components/TopBar";
 import { Avatar } from "../components/Avatar";
 import { members } from "../data/mockFamily";
+import { useTextScale, type TextScale } from "../context/TextScaleContext";
+
+const SCALE_LABEL: Record<TextScale, string> = {
+  normal: "보통",
+  large: "크게",
+  xlarge: "아주 크게",
+};
 
 export function Profile() {
   const navigate = useNavigate();
   const me = members.find((m) => m.isMe)!;
   const [name, setName] = useState(me.name);
+  const { scale, setScale } = useTextScale();
 
   return (
     <Screen className="items-center px-6 pt-2">
@@ -23,14 +31,31 @@ export function Profile() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="이름 수정"
-          className="w-full rounded-2xl bg-beige px-5 py-4 text-base text-ink placeholder:text-ink-muted outline-none"
+          className="w-full rounded-2xl bg-surface border border-border px-5 py-4 text-base text-ink placeholder:text-ink-muted outline-none focus:border-accent"
         />
         <button
           onClick={() => navigate("/scan")}
-          className="w-full rounded-2xl bg-beige-dark py-4 text-base font-semibold text-ink"
+          className="w-full rounded-2xl bg-surface border border-border py-4 text-base font-semibold text-accent"
         >
           사진 다시 찍기 →
         </button>
+      </div>
+
+      <div className="w-full mt-8">
+        <span className="text-sm text-ink-muted">글씨 크기</span>
+        <div className="flex rounded-2xl bg-surface border border-border p-1 mt-2">
+          {(Object.keys(SCALE_LABEL) as TextScale[]).map((s) => (
+            <button
+              key={s}
+              onClick={() => setScale(s)}
+              className={`flex-1 rounded-xl py-3 text-sm font-semibold ${
+                scale === s ? "bg-accent text-white" : "text-ink-muted"
+              }`}
+            >
+              {SCALE_LABEL[s]}
+            </button>
+          ))}
+        </div>
       </div>
     </Screen>
   );
