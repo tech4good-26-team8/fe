@@ -21,13 +21,13 @@ export function VoiceRecord() {
       <TopBar title="음성 인식" />
 
       <div className="w-full mt-4">
-        <h1 className="text-xl font-semibold text-ink leading-snug">
-          앱에서 사용할
+        <h1 className="text-2xl font-bold text-ink leading-snug">
+          {name}님의 목소리를
           <br />
-          {name}님의 목소리를 추출할게요
+          담아볼게요
         </h1>
-        <p className="text-sm font-light text-ink-muted mt-3">
-          음성 추출을 시작한 후 화면에 뜨는 문장을 읽어주세요
+        <p className="text-base text-ink-muted mt-2">
+          시작을 누르고, 화면에 뜨는 문장을 읽어주세요
         </p>
       </div>
 
@@ -47,9 +47,9 @@ export function VoiceRecord() {
       {!recording && (
         <button
           onClick={() => setRecording(true)}
-          className="w-full rounded-2xl bg-accent py-4 text-base font-semibold text-white"
+          className="w-full h-14 rounded-2xl bg-accent text-lg font-semibold text-white active:scale-[0.99] transition-transform"
         >
-          음성 추출 시작하기
+          음성 녹음 시작하기
         </button>
       )}
     </Screen>

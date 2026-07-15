@@ -40,37 +40,61 @@ export function Welcome() {
     }
   }
 
+  const filled = !!name.trim();
+
   return (
     <Screen
-      className="items-center justify-center px-6 pb-16 gap-14"
+      className="px-6 pt-14 pb-8"
       style={{
         background:
           "linear-gradient(234deg, rgba(255,222,89,0.4) 24.91%, rgba(255,130,16,0.4) 61.346%), #fff",
       }}
     >
-      <Logo size={180} />
+      <div className="flex-1 flex flex-col justify-center w-full">
+        <div className="flex justify-center">
+          <Logo size={120} />
+        </div>
 
-      <div className="w-full flex flex-col gap-3">
+        <div className="mt-10">
+          <h1 className="text-[26px] font-bold text-ink leading-snug">
+            만나서 반가워요!
+            <br />
+            어떻게 불러드릴까요?
+          </h1>
+          <p className="text-base text-ink-muted mt-3">가족들에게 보여질 이름이에요</p>
+        </div>
+
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && filled && goToInviteCode()}
           placeholder="이름 입력"
-          className="w-full h-[62px] rounded-2xl bg-surface px-5 text-base text-ink placeholder:text-ink-muted outline-none shadow-sm focus:ring-2 focus:ring-accent"
+          autoFocus
+          className="w-full h-14 rounded-2xl bg-surface px-5 mt-8 text-lg text-ink placeholder:text-ink-muted outline-none shadow-sm focus:ring-2 focus:ring-accent"
         />
-        {error && <span className="text-sm text-danger text-center">{error}</span>}
+        {error && <span className="text-sm text-danger mt-3">{error}</span>}
+      </div>
+
+      <div className="flex flex-col items-center gap-4">
         <button
-          disabled={!name.trim()}
+          disabled={!filled}
           onClick={goToInviteCode}
-          className="w-full h-[62px] rounded-2xl bg-accent disabled:bg-border disabled:text-ink-muted text-base font-semibold text-white shadow-sm"
+          className="w-full h-14 rounded-2xl bg-accent disabled:bg-border disabled:text-ink-muted text-lg font-semibold text-white shadow-sm active:scale-[0.99] transition-transform"
         >
           가족 코드로 접속하기
         </button>
         <button
           onClick={createNewFamily}
-          disabled={!name.trim() || creating}
-          className="text-sm text-ink-muted underline disabled:opacity-50"
+          disabled={!filled || creating}
+          className="text-[15px] text-ink-muted disabled:opacity-50"
         >
-          {creating ? "가족을 만드는 중..." : "아직 가족 코드가 없나요? 새 가족 만들기"}
+          {creating ? (
+            "가족을 만드는 중..."
+          ) : (
+            <>
+              아직 가족 코드가 없나요? <span className="font-semibold text-accent">새 가족 만들기</span>
+            </>
+          )}
         </button>
       </div>
     </Screen>

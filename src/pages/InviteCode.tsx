@@ -59,28 +59,31 @@ export function InviteCode() {
   return (
     <Screen>
       <TopBar />
-      <div className="flex flex-col items-center px-6 pt-8 gap-20">
-        <h1 className="text-xl font-semibold text-ink">초대코드 입력</h1>
-        <div className="flex flex-col items-center gap-3">
-          <div className="flex gap-2.5">
-            {Array.from({ length: CODE_LENGTH }).map((_, i) => (
-              <div
-                key={i}
-                className={`w-11 h-[55px] rounded-2xl flex items-center justify-center text-lg font-semibold ${
-                  i < code.length ? "bg-accent text-white" : "bg-surface border border-border"
-                }`}
-              >
-                {code[i] ?? ""}
-              </div>
-            ))}
-          </div>
-          {error && <span className="text-sm text-danger">{error}</span>}
+      <div className="flex flex-col px-6 pt-6">
+        <h1 className="text-2xl font-bold text-ink leading-snug">
+          초대코드 6자리를
+          <br />
+          입력해주세요
+        </h1>
+        <p className="text-base text-ink-muted mt-2">가족에게 공유받은 코드예요</p>
+        <div className="grid grid-cols-6 gap-2 w-full mt-10">
+          {Array.from({ length: CODE_LENGTH }).map((_, i) => (
+            <div
+              key={i}
+              className={`aspect-[4/5] rounded-xl flex items-center justify-center text-2xl font-bold transition-colors ${
+                i < code.length ? "bg-accent text-white" : "bg-surface border border-border"
+              }`}
+            >
+              {code[i] ?? ""}
+            </div>
+          ))}
         </div>
+        {error && <span className="text-sm text-danger mt-4">{error}</span>}
       </div>
 
       <div className="flex-1" />
 
-      <div className="grid grid-cols-3 gap-2.5 bg-border/40 px-3 pt-4 pb-8">
+      <div className="grid grid-cols-3 gap-1 px-4 pt-2 pb-8">
         {KEYS.map((key, i) => {
           if (key === null) return <span key={i} />;
           if (key === "back") {
@@ -89,9 +92,9 @@ export function InviteCode() {
                 key={i}
                 onClick={pressBack}
                 aria-label="지우기"
-                className="h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-ink-muted active:bg-cream"
+                className="h-14 rounded-2xl flex items-center justify-center text-ink-muted active:bg-border/40 transition-colors"
               >
-                <DeleteIcon className="w-5 h-5" />
+                <DeleteIcon className="w-6 h-6" />
               </button>
             );
           }
@@ -99,9 +102,9 @@ export function InviteCode() {
             <button
               key={i}
               onClick={() => pressDigit(key)}
-              className="h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-ink active:bg-cream"
+              className="h-14 rounded-2xl flex items-center justify-center text-ink active:bg-border/40 transition-colors"
             >
-              <span className="text-xl font-medium">{key}</span>
+              <span className="text-2xl font-semibold">{key}</span>
             </button>
           );
         })}
