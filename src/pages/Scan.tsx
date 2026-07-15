@@ -72,7 +72,7 @@ export function Scan() {
     <Screen className="items-center px-6 pt-6 pb-10">
       <TopBar title="얼굴 인식" />
       <div className="text-center mt-4">
-        <h1 className="text-[22px] font-medium text-ink leading-snug">카메라를 정면으로 바라봐주세요</h1>
+        <h1 className="text-xl font-semibold text-ink leading-snug">카메라를 정면으로 바라봐주세요</h1>
         <p className="text-[15px] font-light text-ink-muted mt-2">사진을 바탕으로 3D 캐릭터가 생성돼요!</p>
       </div>
 

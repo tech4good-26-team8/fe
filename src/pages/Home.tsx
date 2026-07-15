@@ -61,7 +61,7 @@ export function Home() {
 
   return (
     <Screen className="relative overflow-hidden">
-      <div className="flex items-center justify-between gap-3 px-5 pt-5 shrink-0">
+      <div className="flex items-center justify-between gap-3 px-6 pt-5 shrink-0">
         <div>
           <h1 className="text-[17px] font-medium text-ink">{group?.name ?? "우리 가족"}</h1>
           {sinceLabel && <p className="text-xs font-light text-ink-muted mt-0.5">Since {sinceLabel}</p>}

@@ -21,7 +21,7 @@ export function VoiceRecord() {
       <TopBar title="음성 인식" />
 
       <div className="w-full mt-4">
-        <h1 className="text-xl font-medium text-ink leading-snug">
+        <h1 className="text-xl font-semibold text-ink leading-snug">
           앱에서 사용할
           <br />
           {name}님의 목소리를 추출할게요

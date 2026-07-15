@@ -73,7 +73,7 @@ export function InviteCode() {
     <Screen>
       <TopBar />
       <div className="flex flex-col items-center px-6 pt-8 gap-20">
-        <h1 className="text-lg font-semibold text-ink">초대코드 입력</h1>
+        <h1 className="text-xl font-semibold text-ink">초대코드 입력</h1>
         <div className="flex flex-col items-center gap-3">
           <div className="flex gap-2.5">
             {Array.from({ length: CODE_LENGTH }).map((_, i) => (

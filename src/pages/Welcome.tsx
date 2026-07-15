@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Screen } from "../components/Screen";
 import { Logo } from "../components/Logo";
 import { createGroup, joinGroup } from "../api/endpoints";
@@ -8,11 +8,14 @@ import { useOnboardingMedia } from "../context/OnboardingMediaContext";
 
 export function Welcome() {
   const navigate = useNavigate();
-  const { setSession } = useSession();
+  const { memberId, setSession } = useSession();
   const { setDisplayName, setVoiceScript } = useOnboardingMedia();
   const [name, setName] = useState("");
   const [creating, setCreating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // 이미 가입한 기기는 온보딩을 건너뛰고 바로 홈으로
+  if (memberId) return <Navigate to="/home" replace />;
 
   function goToInviteCode() {
     setDisplayName(name.trim());
@@ -52,13 +55,13 @@ export function Welcome() {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="이름 입력"
-          className="w-full h-[68px] rounded-[24px] bg-white px-5 text-[15px] text-ink placeholder:text-ink-muted outline-none shadow-sm focus:ring-2 focus:ring-accent"
+          className="w-full h-[62px] rounded-2xl bg-surface px-5 text-base text-ink placeholder:text-ink-muted outline-none shadow-sm focus:ring-2 focus:ring-accent"
         />
         {error && <span className="text-sm text-danger text-center">{error}</span>}
         <button
           disabled={!name.trim()}
           onClick={goToInviteCode}
-          className="w-full h-[62px] rounded-[24px] bg-accent disabled:bg-border disabled:text-ink-muted text-[15px] font-semibold text-white disabled:font-medium shadow-sm"
+          className="w-full h-[62px] rounded-2xl bg-accent disabled:bg-border disabled:text-ink-muted text-base font-semibold text-white shadow-sm"
         >
           가족 코드로 접속하기
         </button>

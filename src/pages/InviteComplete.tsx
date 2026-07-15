@@ -40,7 +40,7 @@ export function InviteComplete() {
   return (
     <Screen className="items-center justify-center px-6 pb-10 gap-6">
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-xl font-medium text-ink leading-relaxed">
+        <h1 className="text-xl font-semibold text-ink leading-relaxed">
           {groupName ?? "가족"} 그룹에
           <br />
           초대가 완료되었어요!
