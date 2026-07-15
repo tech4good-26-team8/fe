@@ -40,13 +40,13 @@ export function InviteComplete() {
   return (
     <Screen className="items-center justify-center px-6 pb-10 gap-6">
       <div className="flex flex-col items-center gap-2 text-center">
-        <h1 className="text-xl font-semibold text-ink leading-relaxed">
+        <h1 className="text-2xl font-bold text-ink leading-snug">
           {groupName ?? "가족"} 그룹에
           <br />
           초대가 완료되었어요!
         </h1>
-        <p className="text-sm font-light text-ink-muted">
-          이제 가족과 목소리로만 쉽게 일상공유를 할 수 있어요
+        <p className="text-lg text-ink-muted">
+          가족과 목소리로 일상을 나눠보세요
         </p>
       </div>
 
@@ -54,37 +54,45 @@ export function InviteComplete() {
         className="relative w-64 h-64 rounded-full bg-surface shrink-0"
         style={{ boxShadow: "0 0 40px 10px rgba(255, 222, 89, 0.5)" }}
       >
-        {preview.map((m, i) => (
-          <div
-            key={m.memberId}
-            className="absolute"
-            style={{ left: COLLAGE_SLOTS[i].left, top: COLLAGE_SLOTS[i].top }}
-          >
-            <Avatar
-              member={{ id: m.memberId, name: m.name, avatarUrl: m.avatarUrl, avatarStatus: m.avatarStatus }}
-              size={COLLAGE_SLOTS[i].size}
-              showName={false}
-            />
+        {preview.length > 0 ? (
+          preview.map((m, i) => (
+            <div
+              key={m.memberId}
+              className="absolute"
+              style={{ left: COLLAGE_SLOTS[i].left, top: COLLAGE_SLOTS[i].top }}
+            >
+              <Avatar
+                member={{ id: m.memberId, name: m.name, avatarUrl: m.avatarUrl, avatarStatus: m.avatarStatus }}
+                size={COLLAGE_SLOTS[i].size}
+                showName={false}
+              />
+            </div>
+          ))
+        ) : (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-9 text-center">
+            <img src="/icons/house-3d.png" alt="" className="w-16 h-16 mb-1" />
+            <p className="text-lg font-bold text-ink">아직 집이 조용하네요</p>
+            <p className="text-base text-ink-muted leading-snug">가족을 초대하면 이곳이 얼굴들로 채워져요</p>
           </div>
-        ))}
+        )}
       </div>
 
-      <div className="w-full rounded-2xl bg-surface px-6 py-4 flex flex-col gap-2 text-sm font-light text-ink">
+      <div className="w-full rounded-2xl bg-surface shadow-sm px-6 py-5 flex flex-col gap-3 text-base">
         <div className="flex items-center justify-between">
-          <span>현재 가족 구성원 수</span>
-          <span>{members.length}명</span>
+          <span className="text-ink-muted">가족 구성원</span>
+          <span className="font-semibold text-ink">{members.length}명</span>
         </div>
         <div className="flex items-center justify-between">
-          <span>생성일자</span>
-          <span>{joinedAt ? formatDateLabel(joinedAt) : "-"}</span>
+          <span className="text-ink-muted">함께한 날</span>
+          <span className="font-semibold text-ink">{joinedAt ? formatDateLabel(joinedAt) : "-"}</span>
         </div>
       </div>
 
       <button
         onClick={() => navigate("/home")}
-        className="w-full rounded-2xl bg-accent py-4 text-base font-semibold text-white"
+        className="w-full min-h-14 rounded-2xl bg-accent text-lg font-semibold text-white active:scale-[0.99] transition-transform"
       >
-        일상 공유하러 가기 →
+        일상 공유하러 가기
       </button>
     </Screen>
   );

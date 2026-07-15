@@ -108,6 +108,7 @@ export function Home() {
                 avatarStatus: m.avatarStatus,
                 isMe: m.memberId === memberId,
               }}
+              size={116}
               unreadPreview={m.unreadCount > 0 ? (m.latestUnread?.textPreview ?? "새 소식이 있어요") : null}
             />
           </button>
