@@ -55,24 +55,6 @@ export function Home() {
         </div>
       )}
 
-      {feed.length > 0 && (
-        <div className="flex gap-2 overflow-x-auto px-5 pt-4 pb-1 shrink-0">
-          {feed.slice(-4).map((m) => {
-            const author = getMember(m.authorId);
-            return (
-              <div
-                key={m.id}
-                className="flex items-center gap-1.5 rounded-full bg-beige px-3 py-1.5 text-xs text-ink whitespace-nowrap shrink-0"
-              >
-                <span>{author?.emoji}</span>
-                <span className="text-ink-muted">{author?.name}</span>
-                <span>🔊 {m.durationSec ?? 2}초</span>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
       <div className="flex-1 grid grid-cols-2 gap-x-4 gap-y-8 place-items-center px-8 pt-8">
         {members.map((m) => (
           <Avatar key={m.id} member={m} showUpdateBubble={m.status === "active"} />

@@ -15,7 +15,7 @@ interface AvatarProps {
 }
 
 export function Avatar({ member, size = 88, showName = true, showUpdateBubble = false }: AvatarProps) {
-  const badge = statusBadge[member.status];
+  // const badge = statusBadge[member.status];
 
   return (
     <div className="flex flex-col items-center gap-2">
@@ -26,19 +26,14 @@ export function Avatar({ member, size = 88, showName = true, showUpdateBubble = 
           </div>
         )}
         <div
-          className={`${member.bg} flex items-center justify-center rounded-full w-full h-full`}
-          style={{ fontSize: size * 0.5 }}
+          className={`flex items-center justify-center rounded-full w-full h-full`}
+          style={{ fontSize: size * 0.9 }}
         >
           {member.emoji}
         </div>
-        {badge && (
-          <div className="absolute -bottom-1 -right-1 flex items-center justify-center w-7 h-7 rounded-full bg-cream shadow-sm text-sm">
-            {badge}
-          </div>
-        )}
       </div>
       {showName && (
-        <span className="text-sm text-ink-muted">
+        <span className="text-m text-ink-muted">
           {member.isMe ? "나" : member.name}
         </span>
       )}
