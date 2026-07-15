@@ -8,20 +8,7 @@ import { useSession } from "../context/SessionContext";
 import { useOnboardingMedia } from "../context/OnboardingMediaContext";
 
 const CODE_LENGTH = 6;
-const KEYS = [
-  { digit: "1", letters: "" },
-  { digit: "2", letters: "ABC" },
-  { digit: "3", letters: "DEF" },
-  { digit: "4", letters: "GHI" },
-  { digit: "5", letters: "JKL" },
-  { digit: "6", letters: "MNO" },
-  { digit: "7", letters: "PQRS" },
-  { digit: "8", letters: "TUV" },
-  { digit: "9", letters: "WXYZ" },
-  null,
-  { digit: "0", letters: "" },
-  "back" as const,
-];
+const KEYS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", null, "0", "back" as const];
 
 export function InviteCode() {
   const navigate = useNavigate();
@@ -42,7 +29,7 @@ export function InviteCode() {
       .then((res) => {
         if (cancelled) return;
         setVoiceScript(res.voiceScript);
-        setSession({ memberId: res.memberId, displayName });
+        setSession({ groupId: res.groupId ?? null, memberId: res.memberId, displayName });
         navigate("/scan");
       })
       .catch(() => {
@@ -111,13 +98,10 @@ export function InviteCode() {
           return (
             <button
               key={i}
-              onClick={() => pressDigit(key.digit)}
-              className="h-16 rounded-2xl bg-white shadow-sm flex flex-col items-center justify-center gap-0.5 text-ink active:bg-cream"
+              onClick={() => pressDigit(key)}
+              className="h-16 rounded-2xl bg-white shadow-sm flex items-center justify-center text-ink active:bg-cream"
             >
-              <span className="text-xl font-medium">{key.digit}</span>
-              {key.letters && (
-                <span className="text-[10px] tracking-widest text-ink-muted">{key.letters}</span>
-              )}
+              <span className="text-xl font-medium">{key}</span>
             </button>
           );
         })}

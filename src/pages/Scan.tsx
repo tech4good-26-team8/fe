@@ -108,7 +108,7 @@ export function Scan() {
           disabled={scanning}
           className="w-full rounded-2xl bg-accent disabled:bg-border disabled:text-ink-muted py-4 text-base font-semibold text-white"
         >
-          {scanning ? "스캔 중..." : "스캔 시작하기"}
+          {scanning ? "스캔 중..." : "사진 촬영하기"}
         </button>
         <button className="text-sm text-ink-muted underline">
           도움이 필요하신가요? 지원센터 문의
