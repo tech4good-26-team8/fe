@@ -41,9 +41,9 @@ export function Gallery() {
 
       <button
         onClick={() => setPickingDate(true)}
-        className="self-start ml-5 mt-3 text-sm text-ink-muted shrink-0"
+        className="self-center mt-3 text-sm text-ink-muted shrink-0"
       >
-        {selectedDate ? formatKoreanDate(selectedDate) : "전체 날짜"}
+        {formatKoreanDate(selectedDate ?? new Date())}
       </button>
 
       <div className="scroll-area flex-1 overflow-y-auto flex flex-col gap-6 px-6 py-4">
