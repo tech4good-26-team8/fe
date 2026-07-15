@@ -46,7 +46,7 @@ export function InviteComplete() {
           초대가 완료되었어요!
         </h1>
         <p className="text-lg text-ink-muted">
-          이제 가족과 목소리로 쉽게 일상을 나눠보세요
+          가족과 목소리로 일상을 나눠보세요
         </p>
       </div>
 
@@ -69,10 +69,10 @@ export function InviteComplete() {
             </div>
           ))
         ) : (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 px-8 text-center">
-            <span className="text-5xl">🏡</span>
-            <p className="text-lg font-semibold text-ink">아직 가족을 기다리고 있어요</p>
-            <p className="text-base text-ink-muted">초대코드를 공유하면 이곳이 가족들로 채워져요</p>
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 px-9 text-center">
+            <img src="/icons/house-3d.png" alt="" className="w-16 h-16 mb-1" />
+            <p className="text-lg font-bold text-ink">아직 집이 조용하네요</p>
+            <p className="text-base text-ink-muted leading-snug">가족을 초대하면 이곳이 얼굴들로 채워져요</p>
           </div>
         )}
       </div>

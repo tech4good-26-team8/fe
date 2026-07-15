@@ -151,3 +151,13 @@ export function ArchiveIcon({ className }: IconProps) {
     </svg>
   );
 }
+
+export function HomeIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <path className={base} d="M3 10.5 12 3l9 7.5" />
+      <path className={base} d="M5 9.5V21h14V9.5" />
+      <path className={base} d="M9.5 21v-6h5v6" />
+    </svg>
+  );
+}
