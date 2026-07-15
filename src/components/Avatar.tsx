@@ -1,12 +1,5 @@
 import type { FamilyMember } from "../types";
 
-const statusBadge: Record<FamilyMember["status"], string | null> = {
-  active: null,
-  busy: "💻",
-  sleeping: "💤",
-  none: null,
-};
-
 interface AvatarProps {
   member: FamilyMember;
   size?: number;
@@ -15,8 +8,6 @@ interface AvatarProps {
 }
 
 export function Avatar({ member, size = 88, showName = true, showUpdateBubble = false }: AvatarProps) {
-  // const badge = statusBadge[member.status];
-
   return (
     <div className="flex flex-col items-center gap-2">
       <div className="relative" style={{ width: size, height: size }}>

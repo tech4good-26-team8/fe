@@ -6,14 +6,12 @@ import { BottomTabs } from "../components/BottomTabs";
 import { RecordSheet } from "../components/RecordSheet";
 import { InviteModal } from "../components/InviteModal";
 import { BellIcon, PlusIcon, UserIcon } from "../components/icons";
-import { members, getMember } from "../data/mockFamily";
-import { useLiveFeed } from "../hooks/useLiveFeed";
+import { members } from "../data/mockFamily";
 
 const MOCK_NOTIFICATION = "🔔 이정숙님이 새로운 소식을 남겼어요";
 
 export function Home() {
   const navigate = useNavigate();
-  const feed = useLiveFeed();
   const [recording, setRecording] = useState(false);
   const [inviting, setInviting] = useState(false);
   const [notification, setNotification] = useState<string | null>(null);
